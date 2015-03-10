@@ -19,6 +19,7 @@ public class Routines extends GroovyScript implements ModuleEventListener {
     static File patternHome
     static Logger logger
     static HashMap<String, AutonomousContext> allContexts
+    static Routines instance
 
     public void loadScript() {
         patternHome = new File(ToastBootstrap.robotHome, "autonomous/")
@@ -26,6 +27,11 @@ public class Routines extends GroovyScript implements ModuleEventListener {
         allContexts = new HashMap<String, AutonomousContext>()
         logger = new Logger("Routines", Logger.ATTR_DEFAULT)
         ModuleEventBus.registerListener(this)
+        instance = this
+    }
+
+    public static Routines getRoutines() {
+      return instance;
     }
 
     public AutonomousContext getContext(String id) {
@@ -87,7 +93,7 @@ public class Routines extends GroovyScript implements ModuleEventListener {
             this.controllers = controllers
         }
 
-        public void beginRecording() {
+        public void startRecording() {
             builder = new StringBuilder()
             recording = true;
             startTime = System.currentTimeMillis()
