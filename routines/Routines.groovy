@@ -34,7 +34,7 @@ public class Routines extends GroovyScript implements ModuleEventListener {
      * Get the Routines instance
      */
     public static Routines getRoutines() {
-      return instance;
+      return instance
     }
 
     /**
@@ -88,9 +88,9 @@ public class Routines extends GroovyScript implements ModuleEventListener {
         long startTime
         boolean recording
         boolean playback
-        File saveFile;
+        File saveFile
         ArrayList<String> lineData
-        int lineIndex;
+        int lineIndex
 
         public AutonomousContext(String id) {
             this.identifier = id
@@ -110,7 +110,7 @@ public class Routines extends GroovyScript implements ModuleEventListener {
          */
         public void startRecording() {
             builder = new StringBuilder()
-            recording = true;
+            recording = true
             startTime = System.currentTimeMillis()
         }
 
