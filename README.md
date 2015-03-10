@@ -54,11 +54,11 @@ The following are methods to invoke on the Routines API to get it to work.
   JAVA:
   ``` java
     ModuleEventBus.raiseEvent("OpenRIO", "routines_setControllers", "demoRoutine", myMotors);
-ModuleEventBus.raiseEvent("OpenRIO", "routines_startRecording", "demoRoutine");
+    ModuleEventBus.raiseEvent("OpenRIO", "routines_startRecording", "demoRoutine");
   ```
   ``` java
     ModuleEventBus.raiseEvent("OpenRIO", "routines_setControllers", "demoRoutine", myMotors);
-ModuleEventBus.raiseEvent("OpenRIO", "routines_startPlayback", "demoRoutine");
+    ModuleEventBus.raiseEvent("OpenRIO", "routines_startPlayback", "demoRoutine");
   ```
   ``` java
     ModuleEventBus.raiseEvent("OpenRIO", "routines_stopAll");
@@ -66,17 +66,17 @@ ModuleEventBus.raiseEvent("OpenRIO", "routines_startPlayback", "demoRoutine");
   GROOVY:
   ``` groovy
     Routines routines = Routines.getRoutines()
-def context = routines.getContext("demoRoutine")
-context.setControllers(myMotors)
-context.startRecording()
+    def context = routines.getContext("demoRoutine")
+    context.setControllers(myMotors)
+    context.startRecording()
   ```
   ``` groovy
     Routines routines = Routines.getRoutines()
-def context = routines.getContext("demoRoutine")
-context.setControllers(myMotors)
-context.startPlayback()
+  def context = routines.getContext("demoRoutine")
+  context.setControllers(myMotors)
+  context.startPlayback()
   ```
   ``` groovy
     Routines routines = Routines.getRoutines()
-routines.stopAll()
+    routines.stopAll()
   ```
