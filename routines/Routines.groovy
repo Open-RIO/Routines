@@ -28,6 +28,7 @@ public class Routines extends GroovyScript implements ModuleEventListener {
         logger = new Logger("Routines", Logger.ATTR_DEFAULT)
         ModuleEventBus.registerListener(this)
         instance = this
+        logger.info("Routines Successfully Loaded!")
     }
 
     /**
@@ -67,7 +68,7 @@ public class Routines extends GroovyScript implements ModuleEventListener {
         } else if (func.equals("setControllers")) {
           getContext(data[0]).setControllers(data[1])
         } else if (func.equals("startRecording")) {
-          getContext(data[0]).beginRecording()
+          getContext(data[0]).startRecording()
         } else if (func.equals("stopRecording")) {
           getContext(data[0]).stopRecording()
         } else if (func.equals("stopPlayback")) {
@@ -159,8 +160,7 @@ public class Routines extends GroovyScript implements ModuleEventListener {
                     return
                 }
 
-                for (int i = 0; i < controllers.length; i++)
-                    builder.append(format(i, controllers[i].get()) + "\n")
+                (0..controllers.length) { builder.append(format(it, controllers[it].get()) + "\n") }
             }
             if (playback) {
                 for (SpeedController controller : controllers) {
