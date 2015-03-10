@@ -30,10 +30,16 @@ public class Routines extends GroovyScript implements ModuleEventListener {
         instance = this
     }
 
+    /**
+     * Get the Routines instance
+     */
     public static Routines getRoutines() {
       return instance;
     }
 
+    /**
+     * Get the Context for the Given ID (Routine Name)
+     */
     public AutonomousContext getContext(String id) {
         AutonomousContext context
         if (!allContexts.containsKey(id)) {
@@ -44,6 +50,9 @@ public class Routines extends GroovyScript implements ModuleEventListener {
         return context
     }
 
+    /**
+     * Halt Playback of all Routines
+     */
     public void stopAll() {
         for (Map.Entry<String, AutonomousContext> context : allContexts) {
           context.getValue().stopPlayback()
@@ -89,16 +98,25 @@ public class Routines extends GroovyScript implements ModuleEventListener {
             saveFile = new File(patternHome, "${id}.routine")
         }
 
+        /**
+         * Set the SpeedControllers (motors) for this Routine
+         */
         public void setControllers(SpeedController... controllers) {
             this.controllers = controllers
         }
 
+        /**
+         * Start recording for this Routine. Will automatically stop in 15 seconds
+         */
         public void startRecording() {
             builder = new StringBuilder()
             recording = true;
             startTime = System.currentTimeMillis()
         }
 
+        /**
+         * Manually stop recording for this routine
+         */
         public void stopRecording() {
             recording = false
             saveFile.createNewFile()
@@ -109,6 +127,9 @@ public class Routines extends GroovyScript implements ModuleEventListener {
             logger.info("Autonomous Recording Stopped: ${identifier}")
         }
 
+        /**
+         * Start playback for this routine. Will automatically stop in 15 seconds, or when the routine has ended
+         */
         public void startPlayback() {
             saveFile.withReader {
                 lineData = it.readLines()
@@ -118,6 +139,9 @@ public class Routines extends GroovyScript implements ModuleEventListener {
             }
         }
 
+        /**
+         * Manually stop playback for this routine
+         */
         public void stopPlayback() {
             playback = false
             logger.info("Playback stopped: ${identifier}")
