@@ -1,0 +1,43 @@
+/**
+This is the default build.gradle for Toast modules
+@author Jaci
+*/
+
+buildscript {
+  repositories {
+  mavenCentral()
+  maven {
+    name = "GradleRIO"
+    url = "http://dev.imjac.in/maven"
+  }
+  }
+  dependencies {
+    classpath group: 'jaci.openrio.gradle', name: 'GradleRIO', version: '+', classifier: 'Toast'			//Change this line if you wish to Update GradleRIO
+  }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+apply plugin: 'GradleRIO'                                 //Apply the GradleRIO plugin
+
+archivesBaseName = "Routines"
+version = "0.1.0"
+group = "jaci.openrio.routines"
+
+repositories {
+  maven {
+    name = "Toast"
+    url = "http://dev.imjac.in/maven"
+  }
+}
+
+gradlerio.team = "5333"                                   //Your FRC team number (e.g. 5333 for team 'Can't C#', or 47 for Chief Delphi)
+//gradlerio.rioIP = "10.53.33.20"                         //Uncomment to specify the IP address of the RIO
+gradlerio.deployFile = "toast/modules/${archivesBaseName}"
+
+dependencies {
+  compile group: 'jaci.openrio.toast', name: 'Toast', version: '+'    //Change this line to update Toast
+  compile group: 'jaci.openrio.droid', name: 'ToastDroid', version: '+'
+}
