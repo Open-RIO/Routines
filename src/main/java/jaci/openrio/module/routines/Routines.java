@@ -8,7 +8,7 @@ import jaci.openrio.module.routines.command.CommandSet;
 import jaci.openrio.toast.core.ToastBootstrap;
 import jaci.openrio.toast.core.command.CommandBus;
 import jaci.openrio.toast.core.loader.annotation.Branch;
-import jaci.openrio.toast.core.loader.groovy.GroovyPreferences;
+import jaci.openrio.toast.lib.module.ModuleConfig;
 import jaci.openrio.toast.lib.module.ToastStateModule;
 import jaci.openrio.toast.lib.registry.MotorRegistry;
 import jaci.openrio.toast.lib.state.RobotState;
@@ -40,8 +40,8 @@ public class Routines extends ToastStateModule {
         home = new File(ToastBootstrap.toastHome, "system/routines");
         home.mkdirs();
 
-        GroovyPreferences prefs = new GroovyPreferences("Routines");
-        RoutineHeartbeat.heart_rate = prefs.getInt("heartbeat.length", 30, "The delay (in ms) to use for the Routines heartbeat");
+        ModuleConfig prefs = new ModuleConfig("Routines");
+        RoutineHeartbeat.heart_rate = prefs.getInt("heartbeat.length", 30);
 
         CommandBus.registerCommand(new CommandPlayback());
         CommandBus.registerCommand(new CommandRecord());
