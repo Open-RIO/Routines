@@ -10,12 +10,13 @@ import jaci.openrio.toast.core.command.CommandBus;
 import jaci.openrio.toast.core.loader.annotation.Branch;
 import jaci.openrio.toast.lib.module.ModuleConfig;
 import jaci.openrio.toast.lib.module.ToastStateModule;
-import jaci.openrio.toast.lib.registry.MotorRegistry;
+import jaci.openrio.toast.lib.registry.Registrar;
 import jaci.openrio.toast.lib.state.RobotState;
 
 import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Stream;
 
 
 @Branch(branch = "jaci.openrio.module.routines.addon.ToastDroidHandler", dependency = "ToastDroid", method = "toast_droid")
@@ -31,7 +32,7 @@ public class Routines extends ToastStateModule {
 
     @Override
     public String getModuleVersion() {
-        return "0.1.0";
+        return "0.2.0";
     }
 
     @Override
@@ -50,11 +51,8 @@ public class Routines extends ToastStateModule {
     }
 
     public static SpeedController[] getAllControllers() {
-        List<SpeedController> list = MotorRegistry.motors;
-        SpeedController[] controllers = new SpeedController[list.size()];
-        for (int i = 0; i < controllers.length; i++)
-            controllers[i] = list.get(i);
-        return controllers;
+        return (SpeedController[]) Stream.concat(Registrar.pwmRegistrar.stream(), Registrar.canRegistrar.stream())
+                .filter(a -> { return a instanceof SpeedController; }).toArray();
     }
 
     @Override
@@ -93,7 +91,7 @@ public class Routines extends ToastStateModule {
         for (RoutineContext cont : contexts) {
             try {
                 cont.stop();
-                MotorRegistry.stopAll();            //Just to be safe
+                for (SpeedController c : getAllControllers()) c.set(0);
             } catch (Exception e) {
             }
         }

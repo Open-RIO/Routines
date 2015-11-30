@@ -23,7 +23,7 @@ apply plugin: 'maven'
 apply plugin: 'GradleRIO'                                 //Apply the GradleRIO plugin
 
 archivesBaseName = "Routines"
-version = "0.1.0"
+version = "0.2.0"
 group = "jaci.openrio.routines"
 
 repositories {
