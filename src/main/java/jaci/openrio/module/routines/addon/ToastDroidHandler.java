@@ -15,13 +15,16 @@ public class ToastDroidHandler {
         setIndex();
         tile = new Tile("routines_module", "Routines") {
             public String[] getSubtitles() {
-                String[] subs = new String[2];
+                String[] subs;
                 String[] routines = Routines.getAvailableRoutines();
                 if (routines.length > 0) {
+                    subs = new String[2];
                     subs[0] = "Active: " + routines[selection];
                     subs[1] = "Available: " + String.join(", ", routines);
-                } else
+                } else {
+                    subs = new String[1];
                     subs[0] = "No Routines Available";
+                }
                 return subs;
             }
 

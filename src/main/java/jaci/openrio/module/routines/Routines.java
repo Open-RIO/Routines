@@ -32,7 +32,7 @@ public class Routines extends ToastStateModule {
 
     @Override
     public String getModuleVersion() {
-        return "0.2.0";
+        return "0.3.0";
     }
 
     @Override
