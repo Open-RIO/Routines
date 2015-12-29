@@ -24,7 +24,7 @@ apply plugin: 'GradleRIO'                                 //Apply the GradleRIO 
 
 archivesBaseName = "Routines"
 version = "0.2.0"
-group = "jaci.openrio.routines"
+group = "jaci.openrio.modules"
 
 repositories {
   maven {
@@ -37,7 +37,40 @@ gradlerio.team = "5333"                                   //Your FRC team number
 //gradlerio.rioIP = "10.53.33.20"                         //Uncomment to specify the IP address of the RIO
 gradlerio.deployFile = "toast/modules/${archivesBaseName}"
 
+configurations {
+	deployerJars
+}
+
 dependencies {
   compile group: 'jaci.openrio.toast', name: 'Toast', version: '+'    //Change this line to update Toast
   compile group: 'jaci.openrio.droid', name: 'ToastDroid', version: '+'
+  deployerJars 'org.apache.maven.wagon:wagon-ssh:2.2'
+}
+
+
+uploadArchives {
+    repositories.mavenDeployer {
+      configuration = configurations.deployerJars
+      repository(url: "scp://imjac.in/home/maven/maven") {
+        authentication(userName: "maven", password: "")
+      }
+
+      pom {
+	      groupId = project.group
+		  version = project.version
+		  artifactId = project.archivesBaseName
+		  project {
+			  name project.archivesBaseName
+			  packaging 'jar'
+			  description 'BlackBox Sensor Recording'
+		  }
+      }
+    }
+}
+
+uploadArchives.doFirst {
+	println "Please input maven password"
+	println()
+	def pass = System.console().readPassword().toString().trim()
+	uploadArchives.repositories.mavenDeployer.repository.authentication.password = pass
 }
